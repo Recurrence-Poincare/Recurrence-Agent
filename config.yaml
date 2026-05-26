@@ -1,0 +1,29 @@
+mode: attack
+
+roles:
+  explorer:
+    provider: codex
+    model: gpt-5.5
+    reasoning_effort: extra-high
+  prover:
+    provider: codex
+    model: gpt-5.5
+    reasoning_effort: extra-high
+  verifier:
+    provider: gemini
+    model: gemini-3.1-pro-preview
+    reasoning_effort: high
+
+run:
+  timeout_seconds: 3600
+  stop_on_verifier_pass: true
+  write_prompt_files: true
+
+providers:
+  codex:
+    # Edit this template if your Codex CLI uses different flags.
+    command: 'codex -m "{model}" exec --reasoning-effort "{reasoning_effort}" "$(cat "{prompt_file}")"'
+  claude:
+    command: 'claude -p --model "{model}" "$(cat "{prompt_file}")"'
+  gemini:
+    command: 'gemini -m "{model}" -p "$(cat "{prompt_file}")"'

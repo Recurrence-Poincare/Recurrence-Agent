@@ -1,8 +1,16 @@
 # Recurrence-Agent
 
-Recurrence-Agent is a research design for AI-assisted mathematics. It is meant for hard problems where the useful output is not only a proof attempt, but a map of ideas, failures, counterexamples, partial lemmas, and verification pressure.
+Recurrence-Agent is a small CLI-first research agent for AI-assisted mathematics. It is meant for hard problems where the useful output is not only a proof attempt, but a map of ideas, failures, counterexamples, partial lemmas, and verification pressure.
 
-The project is currently published as a clean specification repository. Runnable code will be added only after it has been written under this project and passes the publication checklist in `docs/publication-checklist.md`.
+The public runner is intentionally minimal and auditable. It has three main roles:
+
+- `explorer`: maps nearby conjectures, examples, obstructions, and routes back to the original problem.
+- `prover`: writes a proof attempt from the selected route.
+- `verifier`: checks the proof harshly and returns `PASS`, `FIXABLE`, `FAIL`, or `UNCERTAIN`.
+
+Each role can be assigned to a CLI provider in `config.yaml`. The default prover is Codex/GPT-5.5 with extra-high reasoning. The verifier can be configured as GPT/Codex or Gemini; Gemini is the default verifier in the sample config.
+
+Desktop wrappers are possible, but the recommended way to run Recurrence-Agent is from the command line. The CLI keeps runs reproducible, easier to audit, and easier to script.
 
 ## Core Idea
 
@@ -88,9 +96,113 @@ The failure ledger is important. A failed route that explains why it failed is u
 
 ## Repository Status
 
-This repository is intentionally lightweight right now. It contains the public design, workflow, and publication rules for Recurrence-Agent.
+This repository contains the first clean public REC components:
 
-Runnable implementation will be added later in small, auditable pieces.
+- a Python CLI runner
+- role prompts for explorer, prover, and verifier
+- configurable CLI provider templates
+- shell wrappers for normal runs and proof-only verification
+- docs and examples
+
+It is not a mature package. Treat it as a public scaffold for the Recurrence agent.
+
+## Components
+
+```text
+rec/             Python CLI and runner
+prompts/         Explorer, prover, and verifier prompts
+config.yaml      Provider and role configuration
+run_rec.sh       CLI wrapper for the full workflow
+run_verifier.sh  CLI wrapper for proof-only verification
+docs/            Architecture, workflows, memory map, publication rules
+examples/        Problem template
+```
+
+## Installation
+
+```bash
+git clone https://github.com/Recurrence-Poincare/Recurrence-Agent.git
+cd Recurrence-Agent
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Install at least one model CLI. The sample config uses Codex for exploration/proving and Gemini for verification.
+
+```bash
+npm install -g @openai/codex
+npm install -g @google/gemini-cli
+```
+
+Claude can also be configured as a role provider:
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+## Configuration
+
+The default role assignment is:
+
+```yaml
+roles:
+  prover:
+    provider: codex
+    model: gpt-5.5
+    reasoning_effort: extra-high
+  verifier:
+    provider: gemini
+    model: gemini-3.1-pro-preview
+```
+
+You can switch the verifier to GPT/Codex by editing `config.yaml`:
+
+```yaml
+roles:
+  verifier:
+    provider: codex
+    model: gpt-5.5
+    reasoning_effort: extra-high
+```
+
+The provider commands are templates. If your local CLI uses different flags, edit the corresponding command under `providers`.
+
+## Quick Start
+
+Dry-run without calling any model CLI:
+
+```bash
+python3 -m rec run examples/problem-template.md --out runs/dry-run --dry-run
+```
+
+Run with the configured CLIs:
+
+```bash
+./run_rec.sh examples/problem-template.md runs/example config.yaml
+```
+
+Verify an existing proof:
+
+```bash
+./run_verifier.sh problem.md proof.md runs/verify config.yaml
+```
+
+Outputs are written under the selected `runs/` directory:
+
+```text
+problem.md
+exploration-map.md
+proof-attempt.md
+verification-report.md
+approach-queue.md
+counterexample-log.md
+claim-map.md
+failure-ledger.md
+next-actions.md
+run-log.jsonl
+```
 
 ## Documentation
 
