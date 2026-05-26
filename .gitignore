@@ -1,0 +1,6 @@
+.DS_Store
+runs/
+memory/
+problem/
+*.log
+*.tmp

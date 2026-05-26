@@ -1,0 +1,55 @@
+# Publication Checklist
+
+Before public code or generated artifacts are added to this repository, run these checks.
+
+## Identity Scan
+
+Reject the publish candidate if it contains:
+
+- personal names or emails not intended for publication
+- local filesystem paths
+- private account names
+- old repository URLs
+- hidden metadata that identifies a private workspace
+
+## Lineage Scan
+
+Reject the publish candidate if it contains copied code, copied documentation, inherited license text, or upstream project branding that is not intended to appear in this repository.
+
+## Artifact Scan
+
+Reject the publish candidate if it contains:
+
+- run logs with private prompts
+- model transcripts not intended for release
+- API keys or tokens
+- problem PDFs without permission
+- cached web pages
+- generated proof claims that are not clearly labeled as unverified
+
+## Git History Scan
+
+The public branch should have clean history. Do not publish a branch that previously contained private or unwanted material.
+
+Recommended command pattern:
+
+```bash
+git log --all --stat
+git grep -n "SEARCH_TERM"
+```
+
+Also scan the working tree with a fast text search tool before pushing.
+
+## Mathematical Claims
+
+Do not present a proof as solved unless it has passed independent verification. Prefer labels such as:
+
+- exploratory
+- conjectural
+- unverified
+- verifier-passed
+- human-reviewed
+
+## Release Rule
+
+If in doubt, keep the artifact private.
