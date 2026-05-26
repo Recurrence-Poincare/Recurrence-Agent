@@ -61,6 +61,8 @@ Use one of these final tiers in `attack-certificate.md`:
 - `T4_attacked_unresolved`: meaningful proof and disproof pressure was applied, but no decisive result
 - `T5_incoherent_or_drifted`: the run lost the statement or produced unusable artifacts
 
+See `docs/attack-certificate-schema.md` for the full certificate template and promotion rule.
+
 ## Reference Discipline
 
 External results should be recorded in `retrieved-theorems.jsonl` with:

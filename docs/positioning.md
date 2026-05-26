@@ -1,5 +1,9 @@
 # REC Positioning
 
+Current paper title:
+
+> Recurrence: An Evolving Research-State Copilot for Mathematics
+
 REC should not be sold as a stronger theorem prover, a better Lean formalizer, or a generic multi-agent framework. Those claims are already covered by stronger systems.
 
 The practical selling point is:

@@ -12,6 +12,12 @@ Reject the publish candidate if it contains:
 - old repository URLs
 - hidden metadata that identifies a private workspace
 
+Run:
+
+```bash
+python scripts/privacy_scan.py
+```
+
 ## Lineage Scan
 
 Reject the publish candidate if it contains copied code, copied documentation, inherited license text, or upstream project branding that is not intended to appear in this repository.
@@ -63,3 +69,14 @@ A verified attack certificate is not a verified proof of the original theorem.
 ## Release Rule
 
 If in doubt, keep the artifact private.
+
+## Required Local Checks
+
+Before pushing code changes, run:
+
+```bash
+python -m compileall rec
+python -m unittest discover -s tests
+python -m rec run examples/problem-template.md --out runs/dry-run --dry-run
+python scripts/privacy_scan.py
+```

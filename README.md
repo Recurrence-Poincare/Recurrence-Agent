@@ -1,10 +1,12 @@
-# Recurrence-Agent
+# Recurrence: An Evolving Research-State Copilot for Mathematics
 
 Recurrence-Agent is a small CLI-first research-state harness for AI-assisted mathematics. It is meant for hard problems where the useful output is not only a proof attempt, but a locked statement, an attack certificate, and a reusable map of ideas, failures, counterexamples, partial lemmas, and verification pressure.
 
 The practical selling point is narrow: REC is not trying to outperform formal proof systems or frontier proof agents at final theorem proving. It tries to make research-level attempts auditable before a final proof exists. The core product is a run directory that says exactly what statement was attacked, what proof and disproof routes were tried, where the attempt drifted, what the verifier rejected, and what a human or later agent should do next.
 
-The public runner is intentionally minimal and auditable. It has three main roles:
+We use **research state** to mean the durable, inspectable record of where a mathematical investigation currently stands: exact target statements, active proof and disproof routes, examples, obstructions, failed attempts, verifier judgments, reusable lemmas, and prioritized next steps.
+
+The public runner is intentionally minimal and auditable. It has four main roles:
 
 - `explorer`: maps nearby conjectures, examples, obstructions, and routes back to the original problem.
 - `prover`: writes a proof attempt from the selected route.
@@ -145,6 +147,8 @@ config.yaml      Provider and role configuration
 run_rec.sh       CLI wrapper for the full workflow
 run_verifier.sh  CLI wrapper for proof-only verification
 docs/            Architecture, workflows, memory map, publication rules
+scripts/         Repository hygiene and privacy checks
+tests/           Dry-run artifact-contract checks
 examples/        Problem template
 ```
 
@@ -222,6 +226,14 @@ Verify an existing proof:
 ./run_verifier.sh problem.md proof.md runs/verify config.yaml
 ```
 
+Run the local checks:
+
+```bash
+python3 -m compileall rec
+python3 -m unittest discover -s tests
+python3 scripts/privacy_scan.py
+```
+
 Outputs are written under the selected `runs/` directory:
 
 ```text
@@ -247,11 +259,17 @@ run-log.jsonl
 - `docs/architecture.md`: proposed system architecture
 - `docs/workflows.md`: explore, attack, and verification workflows
 - `docs/attack-mode.md`: locked-statement attack harness
+- `docs/attack-certificate-schema.md`: attack certificate template and required fields
+- `docs/ci-workflow-template.yml`: GitHub Actions template; copy to `.github/workflows/ci.yml` after granting `workflow` scope
+- `docs/cluster-benchmark.md`: benchmark protocol for topic-focused question clusters
+- `docs/paper-positioning.md`: current paper title and repo-to-paper alignment
 - `docs/positioning.md`: practical selling point and article framing
 - `docs/article-revision-suggestions.md`: paper framing notes
 - `docs/memory-map.md`: how runs should be recorded and connected
 - `docs/publication-checklist.md`: required checks before adding public code
 - `examples/problem-template.md`: template for input problems
+- `examples/toy-cluster.md`: small sanitized example input
+- `examples/toy-output/`: expected artifact shape for a toy run
 
 ## License
 

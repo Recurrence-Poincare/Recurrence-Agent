@@ -11,6 +11,8 @@ This document names the public components that make up the initial REC runner.
 - `rec/model_runner.py`: CLI provider invocation
 - `rec/pipeline.py`: locked statement, explore, fresh critic, prove, drift verify, whole-proof verify, and artifact writing
 
+`pyproject.toml` exposes the package metadata and the `rec` console script for future editable installs.
+
 The package is runnable with:
 
 ```bash
@@ -58,3 +60,9 @@ Attack-mode runs write:
 - `run_verifier.sh`: proof-only verification
 
 The CLI is the recommended execution path. A desktop wrapper can call the same commands later.
+
+## Tests and Hygiene
+
+- `tests/test_pipeline.py`: validates dry-run artifact creation for attack, explore, and verify workflows
+- `docs/ci-workflow-template.yml`: GitHub Actions workflow template for compile, unit tests, dry-run, and privacy scan
+- `scripts/privacy_scan.py`: blocks accidental publication of private or unwanted lineage terms

@@ -1,0 +1,3 @@
+{"id":"M1","route_type":"proof","method":"factorization","target_claim":"n^2+n=n(n+1) is even","status":"available","next_test":"prove one of two consecutive integers is even"}
+{"id":"M2","route_type":"proof","method":"factorization","target_claim":"n^2-n=n(n-1) is even","status":"available","next_test":"prove one of two consecutive integers is even"}
+{"id":"M3","route_type":"disproof-warning","method":"small integer test","target_claim":"n^2+1 is even","status":"refuted_nearby_statement","next_test":"keep as drift warning"}
