@@ -144,6 +144,7 @@ It is not a mature package. Treat it as a public scaffold for the Recurrence age
 rec/             Python CLI and runner
 prompts/         Explorer, prover, and verifier prompts
 config.yaml      Provider and role configuration
+gompfproblemlist.pdf  Gompf cluster benchmark input PDF
 run_rec.sh       CLI wrapper for the full workflow
 run_verifier.sh  CLI wrapper for proof-only verification
 docs/            Architecture, workflows, memory map, publication rules
@@ -271,6 +272,7 @@ run-log.jsonl
 - `examples/problem-template.md`: template for input problems
 - `examples/toy-cluster.md`: small sanitized example input
 - `examples/toy-output/`: expected artifact shape for a toy run
+- `gompfproblemlist.pdf`: Gompf cluster benchmark input PDF
 - `run-results/gompf/`: sanitized Gompf cluster benchmark result
 - `run-results/rp2/`: sanitized Lagrangian RP2 packing result
 
