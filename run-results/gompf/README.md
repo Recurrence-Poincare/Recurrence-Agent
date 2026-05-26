@@ -62,6 +62,7 @@ The useful output is that the cluster was converted into a structured research s
 
 ## Files
 
+- `gompf-problem-list.pdf`: benchmark input PDF.
 - `attack-certificate.md`: public attack certificate summary.
 - `reusable-statements.md`: reusable side lemmas, warnings, and next-target candidates.
 - `token-usage.json`: resource accounting for the run.
