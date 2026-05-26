@@ -12,6 +12,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "explorer": {"provider": "codex", "model": "gpt-5.5", "reasoning_effort": "extra-high"},
         "prover": {"provider": "codex", "model": "gpt-5.5", "reasoning_effort": "extra-high"},
         "verifier": {"provider": "gemini", "model": "gemini-3.1-pro-preview", "reasoning_effort": "high"},
+        "critic": {"provider": "gemini", "model": "gemini-3.1-pro-preview", "reasoning_effort": "high"},
     },
     "run": {"timeout_seconds": 3600, "write_prompt_files": True},
     "providers": {

@@ -16,6 +16,8 @@ Reject the publish candidate if it contains:
 
 Reject the publish candidate if it contains copied code, copied documentation, inherited license text, or upstream project branding that is not intended to appear in this repository.
 
+Do not publish old project names, old author blocks, or upstream paper sections unless they are intentionally cited in a references section.
+
 ## Artifact Scan
 
 Reject the publish candidate if it contains:
@@ -49,6 +51,14 @@ Do not present a proof as solved unless it has passed independent verification. 
 - unverified
 - verifier-passed
 - human-reviewed
+
+For attack-mode output, distinguish three different claims:
+
+- the original theorem or conjecture
+- a proposed proof or counterexample
+- the structural honesty of an attack certificate
+
+A verified attack certificate is not a verified proof of the original theorem.
 
 ## Release Rule
 

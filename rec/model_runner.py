@@ -35,6 +35,7 @@ def run_model(
     config: dict[str, Any],
     out_dir: Path,
     dry_run: bool = False,
+    result_role: str | None = None,
 ) -> ModelResult:
     roles = config.get("roles", {})
     role_config = roles.get(role)
@@ -51,14 +52,15 @@ def run_model(
     timeout = int(config.get("run", {}).get("timeout_seconds", 3600))
     prompt_dir = out_dir / "prompts"
     prompt_dir.mkdir(parents=True, exist_ok=True)
-    prompt_file = prompt_dir / f"{role}.prompt.md"
+    result_role = result_role or role
+    prompt_file = prompt_dir / f"{result_role}.prompt.md"
     prompt_file.write_text(prompt, encoding="utf-8")
 
-    command = render_command(str(provider_config["command"]), role_config, prompt_file)
+    command = render_command(str(provider_config["command"]), role_config, prompt_file.resolve())
 
     if dry_run:
-        stdout = f"# Dry-run {role}\n\nProvider: {provider}\nModel: {model}\n\nNo model CLI was called."
-        return ModelResult(role, provider, model, command, 0.0, 0, stdout, "")
+        stdout = f"# Dry-run {result_role}\n\nProvider: {provider}\nModel: {model}\n\nNo model CLI was called."
+        return ModelResult(result_role, provider, model, command, 0.0, 0, stdout, "")
 
     started = time.monotonic()
     completed = subprocess.run(
@@ -71,7 +73,7 @@ def run_model(
     )
     elapsed = time.monotonic() - started
     return ModelResult(
-        role=role,
+        role=result_role,
         provider=provider,
         model=model,
         command=command,

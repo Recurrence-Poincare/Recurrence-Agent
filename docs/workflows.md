@@ -24,12 +24,29 @@ Use attack mode when a human wants direct pressure on a specific conjecture.
 
 Required outputs:
 
+- locked statement
 - method matrix
 - proof-route log
 - counterexample-route log
+- fresh-context critic report
+- statement-drift report
 - bottleneck lemma list
 - verification targets
+- attack certificate
 - next actions
+
+Required loop:
+
+```text
+lock statement
+  -> generate proof-side and disproof-side plans
+  -> run fresh-context critic
+  -> attempt selected proof route
+  -> run statement-drift verifier
+  -> run whole-proof verifier
+  -> assign success tier
+  -> write next actions
+```
 
 Stopping rule:
 
@@ -59,6 +76,8 @@ repair suggestions:
 ```
 
 The verifier should be conservative. `UNCERTAIN` is better than a false pass.
+
+The verifier should return `FAIL` when the candidate proves a changed theorem. A separate drift report should be read before the whole-proof report.
 
 ## Human Review Workflow
 

@@ -1,12 +1,15 @@
 # Recurrence-Agent
 
-Recurrence-Agent is a small CLI-first research agent for AI-assisted mathematics. It is meant for hard problems where the useful output is not only a proof attempt, but a map of ideas, failures, counterexamples, partial lemmas, and verification pressure.
+Recurrence-Agent is a small CLI-first research-state harness for AI-assisted mathematics. It is meant for hard problems where the useful output is not only a proof attempt, but a locked statement, an attack certificate, and a reusable map of ideas, failures, counterexamples, partial lemmas, and verification pressure.
+
+The practical selling point is narrow: REC is not trying to outperform formal proof systems or frontier proof agents at final theorem proving. It tries to make research-level attempts auditable before a final proof exists. The core product is a run directory that says exactly what statement was attacked, what proof and disproof routes were tried, where the attempt drifted, what the verifier rejected, and what a human or later agent should do next.
 
 The public runner is intentionally minimal and auditable. It has three main roles:
 
 - `explorer`: maps nearby conjectures, examples, obstructions, and routes back to the original problem.
 - `prover`: writes a proof attempt from the selected route.
 - `verifier`: checks the proof harshly and returns `PASS`, `FIXABLE`, `FAIL`, or `UNCERTAIN`.
+- `critic`: performs a fresh-context attack audit before proof generation.
 
 Each role can be assigned to a CLI provider in `config.yaml`. The default prover is Codex/GPT-5.5 with extra-high reasoning. The verifier can be configured as GPT/Codex or Gemini; Gemini is the default verifier in the sample config.
 
@@ -27,6 +30,18 @@ state the conjecture
 ```
 
 The name "Recurrence" is literal: the agent is allowed to wander, but it must keep returning to the stated problem.
+
+## What REC Is Not Selling
+
+REC does not claim novelty for ordinary multi-agent orchestration, generator/checker separation, best-of-N sampling, retrieval-augmented proof search, or Lean verification. Those are valuable, but other systems already pursue them directly.
+
+REC's distinct layer is the artifact contract around an open or fragile mathematical target:
+
+- freeze the target before search starts
+- preserve proof-side and disproof-side pressure at the same time
+- record drift as a first-class failure mode
+- turn failed routes into reusable warnings and next targets
+- produce an attack certificate instead of a vague transcript
 
 ## Modes
 
@@ -52,7 +67,17 @@ Attack mode is for a conjecture supplied with strong human belief. It treats the
 - every dangerous missing hypothesis
 - every lemma that would make the proof work
 
-Attack mode should not drift into a different theorem. Each branch must explain how it returns to the original conjecture.
+Attack mode should not drift into a different theorem. Each branch must explain how it returns to the locked statement.
+
+The attack runner writes a hard artifact contract:
+
+- `locked-statement.md`: the frozen target statement for the run
+- `statement-drift-report.md`: a verifier pass that checks whether the proof changed the theorem
+- `fresh-critic-report.md`: an independent critic pass before proof generation
+- `method-matrix.jsonl`: proof and disproof route records
+- `counterexample-attempts.jsonl`: negative-direction attempts
+- `retrieved-theorems.jsonl`: external references with applicability checks
+- `attack-certificate.md`: final tier, drift gate, verifier gate, and human audit checklist
 
 ### Verification Mode
 
@@ -71,14 +96,19 @@ A run should produce research artifacts, not just a final answer:
 
 ```text
 problem.md
+locked-statement.md
 exploration-map.md
+fresh-critic-report.md
 approach-queue.md
+proof-route-log.md
 counterexample-log.md
 claim-map.md
+statement-drift-report.md
 verification-report.md
 failure-ledger.md
 proof-attempt.md
 next-actions.md
+attack-certificate.md
 ```
 
 The failure ledger is important. A failed route that explains why it failed is useful mathematical information.
@@ -99,7 +129,7 @@ The failure ledger is important. A failed route that explains why it failed is u
 This repository contains the first clean public REC components:
 
 - a Python CLI runner
-- role prompts for explorer, prover, and verifier
+- role prompts for explorer, prover, verifier, drift verifier, and critic
 - configurable CLI provider templates
 - shell wrappers for normal runs and proof-only verification
 - docs and examples
@@ -155,6 +185,9 @@ roles:
   verifier:
     provider: gemini
     model: gemini-3.1-pro-preview
+  critic:
+    provider: gemini
+    model: gemini-3.1-pro-preview
 ```
 
 You can switch the verifier to GPT/Codex by editing `config.yaml`:
@@ -193,14 +226,19 @@ Outputs are written under the selected `runs/` directory:
 
 ```text
 problem.md
+locked-statement.md
 exploration-map.md
+fresh-critic-report.md
 proof-attempt.md
+statement-drift-report.md
 verification-report.md
 approach-queue.md
+proof-route-log.md
 counterexample-log.md
 claim-map.md
 failure-ledger.md
 next-actions.md
+attack-certificate.md
 run-log.jsonl
 ```
 
@@ -208,6 +246,9 @@ run-log.jsonl
 
 - `docs/architecture.md`: proposed system architecture
 - `docs/workflows.md`: explore, attack, and verification workflows
+- `docs/attack-mode.md`: locked-statement attack harness
+- `docs/positioning.md`: practical selling point and article framing
+- `docs/article-revision-suggestions.md`: paper framing notes
 - `docs/memory-map.md`: how runs should be recorded and connected
 - `docs/publication-checklist.md`: required checks before adding public code
 - `examples/problem-template.md`: template for input problems
