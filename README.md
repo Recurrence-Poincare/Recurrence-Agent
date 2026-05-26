@@ -150,6 +150,7 @@ docs/            Architecture, workflows, memory map, publication rules
 scripts/         Repository hygiene and privacy checks
 tests/           Dry-run artifact-contract checks
 examples/        Problem template
+run-results/     Sanitized public summaries of representative REC runs
 ```
 
 ## Installation
@@ -270,6 +271,8 @@ run-log.jsonl
 - `examples/problem-template.md`: template for input problems
 - `examples/toy-cluster.md`: small sanitized example input
 - `examples/toy-output/`: expected artifact shape for a toy run
+- `run-results/gompf/`: sanitized Gompf cluster benchmark result
+- `run-results/rp2/`: sanitized Lagrangian RP2 packing result
 
 ## License
 

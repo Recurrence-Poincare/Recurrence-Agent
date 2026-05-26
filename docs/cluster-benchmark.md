@@ -19,7 +19,7 @@ Good benchmark clusters include:
 - related examples and counterexamples in one subfield
 - topic-focused lists collected from papers or working notes
 
-The Gompf problem list is one instance of this benchmark type, not the definition of the benchmark.
+The Gompf problem list is one instance of this benchmark type, not the definition of the benchmark. A sanitized public summary is included in `run-results/gompf/`.
 
 ## Required Properties
 
@@ -75,3 +75,8 @@ The benchmark claim should be phrased carefully:
 > REC is evaluated by how well it turns a cluster of related mathematical questions into a structured research state: locked targets, route matrices, obstruction logs, reusable warnings, and prioritized next targets.
 
 A high score does not mean REC solved the cluster. It means the resulting research state is useful, faithful, and auditable.
+
+## Included Examples
+
+- `run-results/gompf/`: a 22-target open-problem cluster benchmark.
+- `run-results/rp2/`: a topic-focused case study around Lagrangian `RP2` packing questions.

@@ -32,6 +32,7 @@ Research state means the durable, inspectable record of where a mathematical inv
 | drift verification | `statement-drift-report.md` |
 | attack certificate | `attack-certificate.md`, `docs/attack-certificate-schema.md` |
 | cluster benchmark | `docs/cluster-benchmark.md` |
+| representative results | `run-results/gompf/`, `run-results/rp2/` |
 | public hygiene | `docs/publication-checklist.md`, `scripts/privacy_scan.py` |
 
 ## Benchmark Framing
