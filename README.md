@@ -12,6 +12,17 @@ Each role can be assigned to a CLI provider in `config.yaml`. The default prover
 
 Desktop wrappers are possible, but the recommended way to run Recurrence-Agent is from the command line. The CLI keeps runs reproducible, easier to audit, and easier to script.
 
+## Paper
+
+This repository accompanies the ICML 2026 AI4Math Workshop paper, **Recurrence: An Evolving Research-State Copilot for Mathematics**.
+
+The camera-ready paper is available in [`docs/papers/icml2026/`](docs/papers/icml2026/):
+
+- [`recurrence-final.pdf`](docs/papers/icml2026/recurrence-final.pdf)
+- [`recurrence-final.tex`](docs/papers/icml2026/recurrence-final.tex)
+
+Build from that directory with `tectonic recurrence-final.tex`.
+
 ## Core Idea
 
 Most proof agents drift. They make plausible nearby claims, polish weak arguments, and forget the original conjecture. Recurrence-Agent is built around a stricter loop:
