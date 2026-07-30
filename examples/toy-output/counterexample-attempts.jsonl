@@ -1,0 +1,3 @@
+{"id":"C1","target":"n^2+n even","candidate":"n=0,1,2,3","status":"not_refuted","observation":"all tested values are even"}
+{"id":"C2","target":"n^2-n even","candidate":"n=0,1,2,3","status":"not_refuted","observation":"all tested values are even"}
+{"id":"C3","target":"nearby false statement n^2+1 even","candidate":"n=0","status":"refuted_nearby_statement","observation":"0^2+1=1 is odd"}

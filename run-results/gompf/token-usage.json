@@ -1,0 +1,22 @@
+{
+  "total_input_tokens": 1315962,
+  "total_output_tokens": 120669,
+  "total_tokens": 1436631,
+  "total_elapsed_seconds": 2502.0,
+  "agent_calls": 8,
+  "per_provider": {
+    "codex": {
+      "model": "gpt-5.5",
+      "input_tokens": 1300858,
+      "output_tokens": 64699,
+      "calls": 3
+    },
+    "claude": {
+      "model": "sonnet",
+      "input_tokens": 15104,
+      "output_tokens": 55970,
+      "calls": 5
+    }
+  },
+  "interpretation": "Resource accounting for the Gompf cluster run. These counts do not imply theorem-solving success; they account for generating and verifying a research-state attack certificate."
+}
